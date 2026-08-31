@@ -1,0 +1,41 @@
+LEARNERLOOP — FAST DEPLOY
+
+1) Open Google Cloud Shell and upload/extract this folder.
+
+2) Set project:
+gcloud config set project YOUR_PROJECT_ID
+
+3) Enable services:
+gcloud services enable run.googleapis.com aiplatform.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com
+
+4) Deploy from the folder containing requirements.txt:
+gcloud run deploy learnerloop-agent \
+  --source . \
+  --region asia-south1 \
+  --allow-unauthenticated \
+  --set-env-vars GOOGLE_GENAI_USE_VERTEXAI=TRUE,GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID,GOOGLE_CLOUD_LOCATION=global
+
+5) Copy the Cloud Run SERVICE_URL.
+
+6) Check service:
+curl "$SERVICE_URL/list-apps"
+
+7) Create demo session:
+curl -X POST "$SERVICE_URL/apps/learnerloop_agent/users/demo_user/sessions/demo_session" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+
+8) Run the agent:
+curl -X POST "$SERVICE_URL/run" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "appName":"learnerloop_agent",
+    "userId":"demo_user",
+    "sessionId":"demo_session",
+    "newMessage":{
+      "role":"user",
+      "parts":[{
+        "text":"{\"current_performance\":{\"spend\":1450,\"purchases\":16,\"verified_roas\":2.19,\"verified_cpa\":90.63},\"previous_performance\":{\"spend\":980,\"purchases\":8,\"verified_roas\":1.48,\"verified_cpa\":122.5},\"previous_decision\":{\"decision\":\"WATCH\"},\"targets\":{\"target_cpa\":100,\"minimum_roas\":1.8}}"
+      }]
+    }
+  }'

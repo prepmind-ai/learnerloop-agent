@@ -1,0 +1,23 @@
+{
+  "current_performance": {
+    "spend": 1450,
+    "purchases": 16,
+    "verified_purchase_value": 3184,
+    "verified_roas": 2.19,
+    "verified_cpa": 90.63
+  },
+  "previous_performance": {
+    "spend": 980,
+    "purchases": 8,
+    "verified_purchase_value": 1450,
+    "verified_roas": 1.48,
+    "verified_cpa": 122.5
+  },
+  "previous_decision": {
+    "decision": "WATCH"
+  },
+  "targets": {
+    "target_cpa": 100,
+    "minimum_roas": 1.8
+  }
+}
